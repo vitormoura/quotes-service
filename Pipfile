@@ -10,6 +10,7 @@ name = "pypi"
 flask = "*"
 flask-restful = "*"
 pylint = "*"
+flask-sqlalchemy = "*"
 
 
 [dev-packages]
