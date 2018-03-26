@@ -9,14 +9,13 @@ name = "pypi"
 
 flask = "*"
 flask-restful = "*"
-pylint = "*"
 flask-sqlalchemy = "*"
 
-
 [dev-packages]
-
+"autopep8" = "*"
+pylint = "*"
 
 
 [requires]
 
-python_version = "3.5"
+python_version = "3.6"

@@ -1,10 +1,11 @@
-from flask import Flask
+from os import getcwd
+from flask import Flask, render_template
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///quotes.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -16,25 +17,30 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
-    
+
     def as_dict(self):
-       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 db.create_all()
 
-
 #admin = User(username='admin', email='admin@example.com')
 #guest = User(username='guest', email='guest@example.com')
-#db.session.add(admin)
-#db.session.add(guest)
-#db.session.commit()
+# db.session.add(admin)
+# db.session.add(guest)
+# db.session.commit()
 
 api = Api(app)
+
+@app.route('/daniel')
+def hello():
+    usr = User.query.find(1)
+    return render_template('daniel.html', usuario=usr)
 
 
 class HelloWorld(Resource):
     def get(self):
         return [u.as_dict() for u in User.query.all()]
+
 
 api.add_resource(HelloWorld, '/')
 
