@@ -10,6 +10,23 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+
+class Quote(db.Model):
+    """Quote"""
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    author = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String(2048), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey(
+        'category.id'), nullable=False)
+
+
+class QuoteCategory(db.Model):
+    """ Category of a quote """
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(255), nullable=False)
+    pass
+
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -21,6 +38,7 @@ class User(db.Model):
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+
 db.create_all()
 
 #admin = User(username='admin', email='admin@example.com')
@@ -30,6 +48,7 @@ db.create_all()
 # db.session.commit()
 
 api = Api(app)
+
 
 @app.route('/daniel')
 def hello():
