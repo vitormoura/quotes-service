@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_restful import Api
 
-from resources.quotes import QuotesResource, QuoteResource
-from resources.quote_categories import QuoteCategoriesResource
 from models import create_db_for_app
 from utils import CustomJSONEncoder
+
+import resources
 
 #Flask app
 __app = Flask(__name__)
@@ -24,9 +24,6 @@ def run():
     """ run the flask app (development only) """
 
     api = Api(__app)
-
-    QuoteResource.register(api)
-    QuotesResource.register(api)
-    QuoteCategoriesResource.register(api)
-
+    resources.register(api)
+        
     __app.run(debug=True)
