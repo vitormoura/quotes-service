@@ -10,6 +10,7 @@ REST service to manage motivational or corporate quotes
 
 ```shell
 > pipenv install  
-> FLASK_APP=app.py flask run  
+> pipenv shell
+> python main.py
 ```
 
