@@ -10,7 +10,7 @@ class QuoteCategoriesResource(Resource):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('id', type=int, help="category id", required=True)
         self.parser.add_argument('description', help="category description", required=True)
-        self.parser.add_argument('accronym', help="category accronym", required=True)
+        self.parser.add_argument('acronym', help="category acronym", required=True)
 
     def get(self):
         return jsonify(QuoteCategory.query.all())
@@ -18,7 +18,7 @@ class QuoteCategoriesResource(Resource):
     def post(self):
         args = self.parser.parse_args()
 
-        c = QuoteCategory(args['id'],args['description'], args['accronym'])
+        c = QuoteCategory(args['id'],args['description'], args['acronym'])
 
         db = app.get_db()
         db.session.add(c)

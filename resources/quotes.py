@@ -40,12 +40,12 @@ class QuotesResource(Resource):
         self.parser.add_argument('category_id', type=int, help="quote category id", required=True)
             
     def get(self, categ_acc):
-        return jsonify(Quote.query.filter(Quote.category.has(accronym=categ_acc)).all())
+        return jsonify(Quote.query.filter(Quote.category.has(acronym=categ_acc)).all())
 
     def post(self, categ_acc):
         args = self.parser.parse_args()
         
-        categ = QuoteCategory.query.filter_by(accronym=categ_acc).first()
+        categ = QuoteCategory.query.filter_by(acronym=categ_acc).first()
 
         if categ == None:
             abort(400, message='quote category {} not found'.format(categ_acc))

@@ -8,7 +8,7 @@ import random
 class RandomQuoteResource(Resource):
 
     def get(self, categ_acc):
-        qtde = Quote.query.filter(Quote.category.has(accronym=categ_acc)).count()
+        qtde = Quote.query.filter(Quote.category.has(acronym=categ_acc)).count()
         q = None
         
         if qtde == 0:
