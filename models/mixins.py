@@ -1,17 +1,9 @@
 from uuid import UUID
 from sqlalchemy.ext.declarative import DeclarativeMeta
-from flask.json import JSONEncoder
 import json
 
-class CustomJSONEncoder(JSONEncoder):
-
-    def default(self, obj):
-        if isinstance(obj.__class__, DeclarativeMeta):
-            return obj.to_dict()
-            
-        return super(CustomJSONEncoder, self).default(obj)
-
 class OutputMixin(object):
+    """ Support class to serialize objects to json """
     
     RELATIONSHIPS_TO_DICT = False
 

@@ -1,49 +1,63 @@
-from flask_restful import Resource, Api, reqparse, fields
-from model import Quote, QuoteCategory
-from flask import jsonify
+from flask_restful import Resource, Api, reqparse, fields, abort
+from flask import jsonify, Response
+
+from models.quote import Quote
+from models.quote_category import QuoteCategory
 import app
 
 class QuoteResource(Resource):
-    
-    def get(self, id):
         
+    def get(self, id):
         q = Quote.query.get(id)
-        print(q.category)
+        
         if q != None:
-
             return jsonify(q)
         else:
-            return None
+            abort(404, message='quote {} not found'.format(id))
 
     def delete(self, id):
-        q = Quote.query.get(id).first()
+        q = Quote.query.get(id)
 
         if q == None:
-            return None, 404
+            abort(404, message='quote {} not found'.format(id))
         
         db = app.get_db()
         db.session.delete(q)
         db.session.commit() 
 
-        return "OK"
+        return Response(200)  
 
+    @staticmethod
+    def register(api):
+        api.add_resource(QuoteResource, '/quotes/<int:id>')
 
 class QuotesResource(Resource):
         
-    def get(self):
-        return [jsonify(q) for q in Quote.query.all()]
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('author', help="quote author name", required=True)
+        self.parser.add_argument('description', help="quote description", required=True)
+        self.parser.add_argument('category_id', type=int, help="quote category id", required=True)
+            
+    def get(self, categ_acc):
+        return jsonify(Quote.query.filter(Quote.category.has(accronym=categ_acc)).all())
 
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('author', help="quote author name", required=True)
-        parser.add_argument('description', help="quote description", required=True)
-        parser.add_argument('category_id', type=int, help="quote category id", required=True)
-        args = parser.parse_args()
+    def post(self, categ_acc):
+        args = self.parser.parse_args()
         
-        q = Quote(description=args.description, category_id=args.category_id, author=args.author)
+        categ = QuoteCategory.query.filter_by(accronym=categ_acc).first()
+
+        if categ == None:
+            abort(400, message='quote category {} not found'.format(categ_acc))
+
+        q = Quote(description=args.description, category_id=categ.id, author=args.author)
 
         db = app.get_db()
         db.session.add(q)
         db.session.commit()  
 
-        return q.as_dict(), 201
+        return jsonify(q)
+
+    @staticmethod
+    def register(api):
+        api.add_resource(QuotesResource, '/quotes/<string:categ_acc>')   
