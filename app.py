@@ -1,67 +1,27 @@
-from os import getcwd
-from flask import Flask, render_template
-from flask_restful import Resource, Api
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
+from flask_restful import Api
 
-app = Flask(__name__)
+from resources.quotes import QuotesResource, QuoteResource
+from model import create_db_for_app
+from mixins import CustomJSONEncoder
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///quotes.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+__app = Flask(__name__)
+__app.json_encoder = CustomJSONEncoder
 
-db = SQLAlchemy(app)
-
-
-class Quote(db.Model):
-    """Quote"""
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    author = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.String(2048), nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey(
-        'category.id'), nullable=False)
+__db = create_db_for_app(
+    __app, sqliteConnString="sqlite:///quotes.db", createTables=True)
 
 
-class QuoteCategory(db.Model):
-    """ Category of a quote """
-    id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(255), nullable=False)
-    pass
+def get_db():
+    """ get a reference to global app db """
+    return __db
 
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+def run():
+    """ run the flask app (development only) """
 
-    def __repr__(self):
-        return '<User %r>' % self.username
+    api = Api(__app)
+    api.add_resource(QuotesResource, '/quotes')
+    api.add_resource(QuoteResource, '/quotes/<int:id>')
 
-    def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-
-db.create_all()
-
-#admin = User(username='admin', email='admin@example.com')
-#guest = User(username='guest', email='guest@example.com')
-# db.session.add(admin)
-# db.session.add(guest)
-# db.session.commit()
-
-api = Api(app)
-
-
-@app.route('/daniel')
-def hello():
-    usr = User.query.find(1)
-    return render_template('daniel.html', usuario=usr)
-
-
-class HelloWorld(Resource):
-    def get(self):
-        return [u.as_dict() for u in User.query.all()]
-
-
-api.add_resource(HelloWorld, '/')
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    __app.run(debug=True)

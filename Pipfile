@@ -10,8 +10,11 @@ name = "pypi"
 flask = "*"
 flask-restful = "*"
 flask-sqlalchemy = "*"
+"autopep8" = "*"
+
 
 [dev-packages]
+
 "autopep8" = "*"
 pylint = "*"
 
