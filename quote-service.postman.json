@@ -1,0 +1,314 @@
+{
+	"info": {
+		"name": "Quote Service",
+		"_postman_id": "ae2c0ffc-5cc6-7876-a800-49ccf251fd6f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create quote category",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "miscellaneous quotes",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "acronym",
+							"value": "miscellaneous",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/quotes/categories",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"quotes",
+						"categories"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get miscellaneous quotes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "miscellaneous quotes",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "acronym",
+							"value": "miscellaneous",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/quotes/miscellaneous",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"quotes",
+						"miscellaneous"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create new miscellaneous quote",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "author",
+							"value": "CHARLES CALEB COLTON",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "O aplauso é a espora dos espíritos nobres e o fim dos fracos.",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "category_id",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/quotes/miscellaneous",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"quotes",
+						"miscellaneous"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get random miscellaneous quote",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "miscellaneous quotes",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "acronym",
+							"value": "miscellaneous",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/random_quotes/miscellaneous",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"random_quotes",
+						"miscellaneous"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get quote by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "miscellaneous quotes",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "acronym",
+							"value": "miscellaneous",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/quotes/1",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"quotes",
+						"1"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete quote by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "miscellaneous quotes",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "acronym",
+							"value": "miscellaneous",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/quotes/1",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"quotes",
+						"1"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get quote category list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "miscellaneous quotes",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "acronym",
+							"value": "miscellaneous",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/quotes/categories",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"quotes",
+						"categories"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

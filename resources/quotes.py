@@ -10,7 +10,7 @@ class QuoteResource(Resource):
     def get(self, id):
         q = Quote.query.get(id)
         
-        if q != None:
+        if q is not None:
             return jsonify(q)
         else:
             abort(404, message='quote {} not found'.format(id))
@@ -19,7 +19,7 @@ class QuoteResource(Resource):
         q = Quote.query.get(id)
 
         if q == None:
-            abort(404, message='quote {} not found'.format(id))
+            return Response(200)
         
         db = app.get_db()
         db.session.delete(q)
