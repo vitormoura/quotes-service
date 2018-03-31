@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quotes</title>
+        <script src="static/js/angular.min.js"></script>
+        <link href="static/css/site.css" rel="stylesheet" />
+    </head>
+    <body ng-app="QuotesApp">
+        <h1>QUotes</h1>
+
+        <div ng-controller="QuotesApp.MainCtrl">
+            <ul id="list-categories">
+                <li ng-repeat="c in state.categories">{{c.description}}</li>
+            </ul>
+        </div>
+
+        <script src="static/js/main.js"></script>
+    </body>
+</html>
