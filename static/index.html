@@ -1,19 +1,87 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Quotes</title>
-        <script src="static/js/angular.min.js"></script>
-        <link href="static/css/site.css" rel="stylesheet" />
-    </head>
-    <body ng-app="QuotesApp">
-        <h1>QUotes</h1>
 
-        <div ng-controller="QuotesApp.MainCtrl">
-            <ul id="list-categories">
-                <li ng-repeat="c in state.categories">{{c.description}}</li>
-            </ul>
+<head>
+    <title>Quotes</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" rel="stylesheet" />
+
+    <link href="static/css/site.css" rel="stylesheet" />
+</head>
+
+<body ng-app="QuotesApp">
+
+    <section class="hero is-info">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Quotes</h1>
+                <h2 class="subtitle">Create new quote</h2>
+            </div>
         </div>
+    </section>
 
-        <script src="static/js/main.js"></script>
-    </body>
+    <div ng-controller="QuotesApp.MainCtrl">
+
+        <section class="section" ng-show="!state.status.visible">
+
+            <form method="POST" class="container" name="mainform" novalidate>
+
+                <div class="field">
+                    <label class="label">Category</label>
+                    <div class="control">
+                        <div class="select">
+                            <select name="category" ng-model="state.selectedCategory" required>
+                                <option ng-repeat="c in state.categories" ng-value="c" ng-class="{ 'is-danger' : mainform.$submitted && mainform.category.$invalid }">{{c.description}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Description</label>
+                    <div class="control">
+                        <textarea name="description" class="textarea" placeholder="Quote description" ng-model="state.description" required ng-class="{ 'is-danger' : mainform.$submitted && mainform.description.$invalid }"></textarea>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Author</label>
+                    <div class="control">
+                        <input name="author" class="input" type="text" placeholder="Author name" ng-model="state.author" required ng-class="{ 'is-danger' : mainform.$submitted && mainform.author.$invalid }">
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <input type="submit" class="button is-link" value="Submit" ng-click="actions.createNewQuote()" />
+                    </div>
+                </div>
+
+                <script src="static/js/main.js"></script>
+
+            </form>
+        </section>
+
+        <section class="section" ng-show="state.status.visible">
+
+            <div class="container">
+                <article class="message" ng-class="{ 'is-success': state.status.success, 'is-alert': !state.status.success }">
+                    <div class="message-header">
+                        <p>{{(state.status.success ? 'success' : 'alert')}}</p>
+                        <button class="delete" aria-label="delete" ng-click="actions.closeStatusMessage()"></button>
+                    </div>
+                    <div class="message-body">
+                        {{state.status.message}}
+                    </div>
+                </article>
+
+                <button class="button is-info" ng-click="actions.closeStatusMessage()">create new quote</button>
+            </div>
+
+        </section>
+
+    </div>
+
+</body>
+
 </html>
