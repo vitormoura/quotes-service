@@ -1,8 +1,8 @@
-from flask_restful import Resource, Api, reqparse, fields, abort
+from flask_restful import Resource, reqparse, fields, abort
 from flask import jsonify, Response
+from utils import request_wants_json
 
 from models.quote import Quote
-import app
 import random
 
 class RandomQuoteResource(Resource):
@@ -16,10 +16,16 @@ class RandomQuoteResource(Resource):
         elif qtde == 1:
             q = Quote.query.first()
         else:    
-            randomPos = random.randrange(0, qtde)
-            q = Quote.query.order_by('id').offset(randomPos).limit(1).first()
+            random_pos = random.randrange(0, stop=qtde)
+            q = Quote.query.order_by('id').offset(random_pos).first()
 
-        return '{} - {}'.format(q.description,q.author)
+        if q is None:
+            abort(500, 'internal error')
+
+        if request_wants_json():
+            return jsonify(q)
+        else:
+            return '{} - {}'.format(q.description, q.author)
 
     @staticmethod
     def register(api):

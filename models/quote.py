@@ -15,10 +15,8 @@ class Quote(OutputMixin, db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey(
         'quote_category.id'), nullable=False)
 
-    def __init__(self, author, description, category_id):
-        self.author = author
-        self.description = description
-        self.category_id = category_id
+    def __repr__(self):
+        return '<Quote id={}, description={}, category_id={}, author={} >'.format(self.id, self.description, self.category_id, self.author)
 
 class QuoteSchema(ma.ModelSchema):
     class Meta:

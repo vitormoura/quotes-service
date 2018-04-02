@@ -32,7 +32,7 @@ class QuoteCategoriesResource(Resource):
         if existing_categ is not None:
             abort(400, message='category already exists')
 
-        c = QuoteCategory(args.id, args.description, args.acronym)
+        c = QuoteCategory(id=args.id, description=args.description, acronym=args.acronym)
 
         db.session.add(c)
         db.session.commit()
