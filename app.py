@@ -14,8 +14,9 @@ def index():
 import models
 import resources
 
-#Database
-models.create_tables()
-
 #API and resources
 resources.register(myapp)
+
+#Database
+def init_db():
+    models.create_tables()
