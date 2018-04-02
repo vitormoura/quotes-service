@@ -9,6 +9,10 @@ from models.quote_category import QuoteCategory
 
 class QuoteResource(Resource):
 
+    @staticmethod
+    def register(api):
+        api.add_resource(QuoteResource, '/quotes/<int:id>')
+
     def get(self, id):
         q = Quote.query.get_or_404(id)
         
@@ -23,14 +27,14 @@ class QuoteResource(Resource):
         db.session.delete(q)
         db.session.commit()
 
-        return Response(status=200)
-
-    @staticmethod
-    def register(api):
-        api.add_resource(QuoteResource, '/quotes/<int:id>')
+        return Response(status=200)  
 
 
 class QuotesResource(Resource):
+
+    @staticmethod
+    def register(api):
+        api.add_resource(QuotesResource, '/quotes/<string:categ_acc>')
 
     def __init__(self):
         self.parser = reqparse.RequestParser()
@@ -63,8 +67,4 @@ class QuotesResource(Resource):
         db.session.add(q)
         db.session.commit()
 
-        return jsonify(q)
-
-    @staticmethod
-    def register(api):
-        api.add_resource(QuotesResource, '/quotes/<string:categ_acc>')
+        return jsonify(q)    

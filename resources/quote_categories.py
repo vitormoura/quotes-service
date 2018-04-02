@@ -8,6 +8,10 @@ from models.quote_category import QuoteCategory, QuoteCategorySchema
 
 class QuoteCategoriesResource(Resource):
 
+    @staticmethod
+    def register(api):
+        api.add_resource(QuoteCategoriesResource, '/quotes/categories')
+
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument(
@@ -39,6 +43,4 @@ class QuoteCategoriesResource(Resource):
 
         return jsonify(c)
 
-    @staticmethod
-    def register(api):
-        api.add_resource(QuoteCategoriesResource, '/quotes/categories')
+    

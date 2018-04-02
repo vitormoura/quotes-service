@@ -7,6 +7,10 @@ import random
 
 class RandomQuoteResource(Resource):
 
+    @staticmethod
+    def register(api):
+        api.add_resource(RandomQuoteResource, '/random_quotes/<string:categ_acc>')   
+
     def get(self, categ_acc):
         qtde = Quote.query.filter(Quote.category.has(acronym=categ_acc)).count()
         q = None
@@ -25,8 +29,4 @@ class RandomQuoteResource(Resource):
         if request_wants_json():
             return jsonify(q)
         else:
-            return '{} - {}'.format(q.description, q.author)
-
-    @staticmethod
-    def register(api):
-        api.add_resource(RandomQuoteResource, '/random_quotes/<string:categ_acc>')   
+            return '{} - {}'.format(q.description, q.author)    
