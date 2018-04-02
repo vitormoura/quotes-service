@@ -3,6 +3,7 @@ REST service to manage motivational or corporate quotes
 
 ### Libraries
 
+- FLASK: http://flask.pocoo.org/
 - FLASK RESTFUL: https://flask-restful.readthedocs.io/en/latest/
 - Flask-SQLAlchemy: http://flask-sqlalchemy.pocoo.org/2.3/quickstart/
 
@@ -12,5 +13,11 @@ REST service to manage motivational or corporate quotes
 > pipenv install  
 > pipenv shell
 > python main.py
+```
+
+### Testing
+
+```shell
+> python test_app.py
 ```
 
