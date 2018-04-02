@@ -6,62 +6,64 @@ from models import db
 from models.quote import Quote, QuoteSchema
 from models.quote_category import QuoteCategory
 
+
 class QuoteResource(Resource):
-        
+
     def get(self, id):
-        q = Quote.query.get(id)
+        q = Quote.query.get_or_404(id)
         
-        if q is not None:
-            return jsonify(q)
-        else:
-            abort(404, message='quote {} not found'.format(id))
+        return jsonify(q)
 
     def delete(self, id):
         q = Quote.query.get(id)
 
-        if q == None:
-            return Response(200)
+        if q is None:
+            return Response(status=200)
         
-        db = app.get_db()
         db.session.delete(q)
-        db.session.commit() 
+        db.session.commit()
 
-        return Response(200)  
+        return Response(status=200)
 
     @staticmethod
     def register(api):
         api.add_resource(QuoteResource, '/quotes/<int:id>')
 
+
 class QuotesResource(Resource):
-        
+
     def __init__(self):
         self.parser = reqparse.RequestParser()
-        self.parser.add_argument('author', help="quote author name", required=True)
-        self.parser.add_argument('description', help="quote description", required=True)
-        self.parser.add_argument('category_id', type=int, help="quote category id", required=True)
-            
+        self.parser.add_argument(
+            'author', help="quote author name", required=True)
+        self.parser.add_argument(
+            'description', help="quote description", required=True)
+        self.parser.add_argument(
+            'category_id', type=int, help="quote category id", required=True)
+
     def get(self, categ_acc):
         return (Quote.query.filter(Quote.category.has(acronym=categ_acc)).all())
 
     def post(self, categ_acc):
-                                
+
         categ = QuoteCategory.query.filter_by(acronym=categ_acc).first()
 
         if categ == None:
             abort(400, message='quote category {} not found'.format(categ_acc))
 
         args = self.parser.parse_args()
-        
+
         if len(args.description) == 0 or len(args.author) == 0:
             abort(400, message='invalid quote description or author name')
 
-        q = Quote(description=args.description, category_id=categ.id, author=args.author)
-        
+        q = Quote(description=args.description,
+                  category_id=categ.id, author=args.author)
+
         db.session.add(q)
-        db.session.commit()  
+        db.session.commit()
 
         return jsonify(q)
 
     @staticmethod
     def register(api):
-        api.add_resource(QuotesResource, '/quotes/<string:categ_acc>')   
+        api.add_resource(QuotesResource, '/quotes/<string:categ_acc>')

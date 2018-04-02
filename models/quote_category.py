@@ -6,7 +6,7 @@ class QuoteCategory(OutputMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(255), nullable=False)
-    acronym = db.Column(db.String(64), nullable=False)
+    acronym = db.Column(db.String(64), nullable=False, unique=True)
 
     def __init__(self, id, description, acronym):
         self.id = id
