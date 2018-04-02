@@ -1,8 +1,7 @@
 from flask_restful import Resource, Api, reqparse, fields
 from flask import jsonify
 
-from models.quote_category import QuoteCategory
-import app
+from models.quote_category import QuoteCategory, QuoteCategorySchema
 
 class QuoteCategoriesResource(Resource):
 
@@ -14,11 +13,14 @@ class QuoteCategoriesResource(Resource):
 
     def get(self):
         return jsonify(QuoteCategory.query.all())
-    
+            
     def post(self):
         args = self.parser.parse_args()
 
-        c = QuoteCategory(args['id'],args['description'], args['acronym'])
+        if len(args.description) == 0 or len(args.acronym) == 0:
+            abort(400, message='invalid category description or acronym')
+
+        c = QuoteCategory(args.id, args.description, args.acronym)
 
         db = app.get_db()
         db.session.add(c)

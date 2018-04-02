@@ -1,9 +1,10 @@
 from flask_restful import Resource, Api, reqparse, fields, abort
-from flask import jsonify, Response
+from flask import jsonify, Response, request, app
+from marshmallow import ValidationError
 
-from models.quote import Quote
+from models import db
+from models.quote import Quote, QuoteSchema
 from models.quote_category import QuoteCategory
-import app
 
 class QuoteResource(Resource):
         
@@ -40,19 +41,22 @@ class QuotesResource(Resource):
         self.parser.add_argument('category_id', type=int, help="quote category id", required=True)
             
     def get(self, categ_acc):
-        return jsonify(Quote.query.filter(Quote.category.has(acronym=categ_acc)).all())
+        return (Quote.query.filter(Quote.category.has(acronym=categ_acc)).all())
 
     def post(self, categ_acc):
-        args = self.parser.parse_args()
-        
+                                
         categ = QuoteCategory.query.filter_by(acronym=categ_acc).first()
 
         if categ == None:
             abort(400, message='quote category {} not found'.format(categ_acc))
 
-        q = Quote(description=args.description, category_id=categ.id, author=args.author)
+        args = self.parser.parse_args()
+        
+        if len(args.description) == 0 or len(args.author) == 0:
+            abort(400, message='invalid quote description or author name')
 
-        db = app.get_db()
+        q = Quote(description=args.description, category_id=categ.id, author=args.author)
+        
         db.session.add(q)
         db.session.commit()  
 

@@ -309,6 +309,49 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "Get quote categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "miscellaneous quotes",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "acronym",
+							"value": "miscellaneous",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/quotes/categories",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"quotes",
+						"categories"
+					]
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

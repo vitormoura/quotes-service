@@ -11,14 +11,14 @@ flask = "*"
 flask-restful = "*"
 flask-sqlalchemy = "*"
 pyodbc = "*"
-uwsgi = "*"
+flask-marshmallow = "*"
+marshmallow-sqlalchemy = "*"
 
 
 [dev-packages]
 
 "autopep8" = "*"
 pylint = "*"
-
 
 [requires]
 

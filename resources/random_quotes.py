@@ -17,7 +17,7 @@ class RandomQuoteResource(Resource):
             q = Quote.query.first()
         else:    
             randomPos = random.randrange(0, qtde)
-            q = Quote.query.order_by('id asc').offset(randomPos).limit(1).first()
+            q = Quote.query.order_by('id').offset(randomPos).limit(1).first()
 
         return '{} - {}'.format(q.description,q.author)
 

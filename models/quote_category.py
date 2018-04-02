@@ -1,4 +1,4 @@
-from . import db
+from . import db, ma
 from .mixins import OutputMixin
 
 class QuoteCategory(OutputMixin, db.Model):
@@ -12,3 +12,7 @@ class QuoteCategory(OutputMixin, db.Model):
         self.id = id
         self.description = description
         self.acronym = acronym
+
+class QuoteCategorySchema(ma.ModelSchema):
+    class Meta:
+        model = QuoteCategory
