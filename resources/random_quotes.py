@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from flask_restful import Resource, reqparse, fields, abort
 from flask import jsonify, Response
 from utils import request_wants_json
@@ -29,4 +31,4 @@ class RandomQuoteResource(Resource):
         if request_wants_json():
             return jsonify(q)
         else:
-            return '{} - {}'.format(q.description, q.author)    
+            return Response('{} - {}'.format(q.description, q.author), mimetype="text/plain")
