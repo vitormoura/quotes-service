@@ -1,8 +1,8 @@
 from flask_restful import Api
 
-from resources.quotes import QuotesResource, QuoteResource
-from resources.quote_categories import QuoteCategoriesResource
-from resources.random_quotes import RandomQuoteResource
+from .quotes import QuotesResource, QuoteResource
+from .quote_categories import QuoteCategoriesResource
+from .random_quotes import RandomQuoteResource
 
 def register(app):
     """ register resources in the api """

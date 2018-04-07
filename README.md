@@ -6,6 +6,7 @@ REST service to manage motivational or corporate quotes
 - FLASK: http://flask.pocoo.org/
 - FLASK RESTFUL: https://flask-restful.readthedocs.io/en/latest/
 - Flask-SQLAlchemy: http://flask-sqlalchemy.pocoo.org/2.3/quickstart/
+- Pytest: https://docs.pytest.org/en/latest/
 
 ### Instalation
 
@@ -18,6 +19,6 @@ REST service to manage motivational or corporate quotes
 ### Testing
 
 ```shell
-> python test_app.py
+> pytest tests/
 ```
 

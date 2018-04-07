@@ -2,8 +2,8 @@ from flask_restful import Resource, Api, reqparse, fields, abort
 from flask import jsonify
 from sqlalchemy import or_
 
-from models import db
-from models.quote_category import QuoteCategory, QuoteCategorySchema
+from ..models import db
+from ..models.quote_category import QuoteCategory, QuoteCategorySchema
 
 
 class QuoteCategoriesResource(Resource):

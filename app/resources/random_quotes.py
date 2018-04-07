@@ -2,9 +2,9 @@
 
 from flask_restful import Resource, reqparse, fields, abort
 from flask import jsonify, Response
-from utils import request_wants_json
+from ..utils import request_wants_json
 
-from models.quote import Quote
+from ..models.quote import Quote
 import random
 
 class RandomQuoteResource(Resource):

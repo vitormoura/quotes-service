@@ -2,9 +2,9 @@ from flask_restful import Resource, Api, reqparse, fields, abort
 from flask import jsonify, Response, request, app
 from marshmallow import ValidationError
 
-from models import db
-from models.quote import Quote, QuoteSchema
-from models.quote_category import QuoteCategory
+from ..models import db
+from ..models.quote import Quote, QuoteSchema
+from ..models.quote_category import QuoteCategory
 
 
 class QuoteResource(Resource):
