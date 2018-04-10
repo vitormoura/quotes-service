@@ -1,26 +1,21 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
 flask = "*"
 flask-restful = "*"
 flask-sqlalchemy = "*"
 pyodbc = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
+flask-cors = "*"
 
 [dev-packages]
-
 "autopep8" = "*"
 pylint = "*"
 pytest = "*"
 
-
 [requires]
-
 python_version = "3.6"

@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, render_template
 from flask_restful import Api
+from flask_cors import CORS
 
 from .utils import CustomJSONEncoder
 from .resources import register as register_resources_of
@@ -16,6 +17,8 @@ def create_app(config_opts):
     # Flask app
     myapp = Flask(__name__)
     myapp.json_encoder = CustomJSONEncoder
+
+    CORS(myapp)
 
     if isinstance(config_opts, str):
 
