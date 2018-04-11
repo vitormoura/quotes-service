@@ -20,7 +20,7 @@ class RandomQuoteResource(Resource):
         if qtde == 0:
             return "desculpe, mas a princesa está em outro castelo - toad"
         elif qtde == 1:
-            q = Quote.query.first()
+            q = Quote.query.filter(Quote.category.has(acronym=categ_acc)).first()
         else:    
             random_pos = random.randrange(0, stop=qtde)
             q = Quote.query.order_by('id').offset(random_pos).first()
