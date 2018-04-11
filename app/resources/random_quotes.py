@@ -18,7 +18,7 @@ class RandomQuoteResource(Resource):
         q = None
         
         if qtde == 0:
-            return "desculpe, mas a princesa está em outro castelo - toad"
+            return Response("desculpe, mas a princesa está em outro castelo - toad", mimetype="text/plain")
         elif qtde == 1:
             q = Quote.query.filter(Quote.category.has(acronym=categ_acc)).first()
         else:    
