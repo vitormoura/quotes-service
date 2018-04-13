@@ -23,7 +23,7 @@ class RandomQuoteResource(Resource):
             q = Quote.query.filter(Quote.category.has(acronym=categ_acc)).first()
         else:    
             random_pos = random.randrange(0, stop=qtde)
-            q = Quote.query.order_by('id').offset(random_pos).first()
+            q = Quote.query.filter(Quote.category.has(acronym=categ_acc)).order_by('id').offset(random_pos).first()
 
         if q is None:
             abort(500, 'internal error')
