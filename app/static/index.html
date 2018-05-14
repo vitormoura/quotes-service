@@ -11,76 +11,127 @@
 
 <body ng-app="QuotesApp">
 
-    <section class="hero is-info">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">Quotes</h1>
-                <h2 class="subtitle">Create new quote</h2>
-            </div>
-        </div>
-    </section>
-
     <div ng-controller="QuotesApp.MainCtrl">
 
-        <section class="section" ng-show="!state.status.visible">
+        <article ng-show="state.panelIndex == 0">
+            <header class="hero is-info">
+                <div class="hero-body">
+                    <div class="container">
+                        <h1 class="title">Quotes</h1>
+                        <h2 class="subtitle">Quote list</h2>
+                    </div>
+                </div>
+            </header>
 
-            <form method="POST" class="container" name="mainform" novalidate>
+            <div class="container" ng-show="state.categories &&  state.categories.length > 0">
 
-                <div class="field">
-                    <label class="label">Category</label>
-                    <div class="control">
+                <div class="content">
+                    <div class="section">
                         <div class="select">
-                            <select name="category" ng-model="state.selectedCategory" required>
-                                <option ng-repeat="c in state.categories" ng-value="c" ng-class="{ 'is-danger' : mainform.$submitted && mainform.category.$invalid }">{{c.description}}</option>
+                            <select name="category" ng-model="state.selectedCategory" ng-change="actions.reloadQuotes()">
+                                <option ng-repeat="c in state.categories" ng-value="c">{{c.description}}</option>
                             </select>
                         </div>
+
+                        <input type="button" value="New" class="button is-info" ng-click="actions.showFormCreateNewQuote()" ng-disabled="!state.selectedCategory"
+                        />
+                    </div>
+
+                    <div class="section">
+                        
+                        <table class="table" ng-show="state.quotes && state.quotes.length > 0">
+                            <tr>
+                                <th>Quote</th>
+                                <th>Author</th>
+                                <th></th>
+                            </tr>
+                            <tr ng-repeat="q in state.quotes">
+                                <td>{{q.description}}</td>
+                                <td>{{q.author}}</td>
+                                <td></td>
+                            </tr>
+                        </table>
+
+                        <p ng-show="!state.quotes || state.quotes.length == 0">No quotes</p>
+
                     </div>
                 </div>
 
-                <div class="field">
-                    <label class="label">Description</label>
-                    <div class="control">
-                        <textarea name="description" class="textarea" placeholder="Quote description" ng-model="state.description" required ng-class="{ 'is-danger' : mainform.$submitted && mainform.description.$invalid }"></textarea>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="label">Author</label>
-                    <div class="control">
-                        <input name="author" class="input" type="text" placeholder="Author name" ng-model="state.author" required ng-class="{ 'is-danger' : mainform.$submitted && mainform.author.$invalid }">
-                    </div>
-                </div>
-
-                <div class="field is-grouped">
-                    <div class="control">
-                        <input type="submit" class="button is-link" value="Submit" ng-click="actions.createNewQuote()" />
-                    </div>
-                </div>
-
-                <script src="static/js/main.js"></script>
-
-            </form>
-        </section>
-
-        <section class="section" ng-show="state.status.visible">
-
-            <div class="container">
-                <article class="message" ng-class="{ 'is-success': state.status.success, 'is-alert': !state.status.success }">
-                    <div class="message-header">
-                        <p>{{(state.status.success ? 'success' : 'alert')}}</p>
-                        <button class="delete" aria-label="delete" ng-click="actions.closeStatusMessage()"></button>
-                    </div>
-                    <div class="message-body">
-                        {{state.status.message}}
-                    </div>
-                </article>
-
-                <button class="button is-info" ng-click="actions.closeStatusMessage()">create new quote</button>
             </div>
 
-        </section>
+            <div class="container" ng-show="!state.categories || state.categories.length == 0">
+                <div class="content section">
+                    <h4>No categories</h4>
+                </div>
+            </div>
 
+        </article>
+
+        <article ng-show="state.panelIndex == 1">
+            <section class="hero is-info">
+                <div class="hero-body">
+                    <div class="container">
+                        <h1 class="title">Quotes</h1>
+                        <h2 class="subtitle">Create new quote</h2>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" ng-show="!state.form.status.visible">
+
+                <form method="POST" class="container" name="mainform" novalidate>
+
+                    <div class="field">
+                        <label class="label">Category</label>
+                        <div class="control">
+                            {{state.selectedCategory.description}}
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Description</label>
+                        <div class="control">
+                            <textarea name="description" class="textarea" placeholder="Quote description" ng-model="state.form.description" required
+                                ng-class="{ 'is-danger' : mainform.$submitted && mainform.description.$invalid }"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Author</label>
+                        <div class="control">
+                            <input name="author" class="input" type="text" placeholder="Author name" ng-model="state.form.author" required ng-class="{ 'is-danger' : mainform.$submitted && mainform.author.$invalid }">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control"></div>
+                        <input type="submit" class="button is-link" value="Submit" ng-click="actions.createNewQuote()" />
+                        <input type="button" class="button" value="Cancel" ng-click="actions.hideFormCreateNewQuote()" />
+                    </div>
+                </form>
+            </section>
+
+            <section class="section" ng-show="state.form.status.visible">
+
+                <div class="container">
+                    <article class="message" ng-class="{ 'is-success': state.form.status.success, 'is-alert': !state.form.status.success }">
+                        <div class="message-header">
+                            <p>{{(state.form.status.success ? 'success' : 'alert')}}</p>
+                            <button class="delete" aria-label="delete" ng-click="actions.closeStatusMessage()"></button>
+                        </div>
+                        <div class="message-body">
+                            {{state.form.status.message}}
+                        </div>
+                    </article>
+
+                    <button class="button is-info" ng-click="actions.closeStatusMessage()">create new quote</button>
+                </div>
+
+            </section>
+        </article>
     </div>
+
+    <script src="static/js/main.js"></script>
 
 </body>
 
