@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="section">
-                        
+
                         <table class="table" ng-show="state.quotes && state.quotes.length > 0">
                             <tr>
                                 <th>Quote</th>
@@ -48,7 +48,11 @@
                             <tr ng-repeat="q in state.quotes">
                                 <td>{{q.description}}</td>
                                 <td>{{q.author}}</td>
-                                <td></td>
+                                <td>
+                                    <a class="button is-danger is-outlined" ng-click="actions.removeQuote(q)">
+                                        <span>Delete</span>
+                                    </a>
+                                </td>
                             </tr>
                         </table>
 

@@ -14,6 +14,7 @@ var ctrl = app.controller('QuotesApp.MainCtrl', function ($scope, $http) {
         selectedCategory: null,
         panelIndex: PANEL_QUOTE_LIST,
         form: {
+            id: 0,
             description: '',
             author: '',
             status: {
@@ -80,6 +81,7 @@ var ctrl = app.controller('QuotesApp.MainCtrl', function ($scope, $http) {
 
                 $http.post(`quotes/${categ.acronym}`, payload).then(function (result) {
 
+                    form.id = 0;
                     form.description = '';
                     form.author = '';
 
@@ -92,6 +94,17 @@ var ctrl = app.controller('QuotesApp.MainCtrl', function ($scope, $http) {
                     actions.showStatusMessage('an internal error occurred. Please try again', false)
                 });
             }
+        },
+
+        removeQuote(q) {
+            $http.delete(`quotes/${q.id}`).then(function (result) {
+                state.quotes = state.quotes.filter(function(x){
+                    return x.id != q.id
+                });
+
+            }, function(err) {
+                actions.showStatusMessage('an internal error occurred. Please try again', false)
+            })
         },
 
         showStatusMessage(msg, isSuccess) {
