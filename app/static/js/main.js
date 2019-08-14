@@ -5,7 +5,7 @@ var ctrl = app.controller('QuotesApp.MainCtrl', function ($scope, $http) {
     const PANEL_QUOTE_FORM = 1;
 
     function getQuoteCategories() {
-        return $http.get('quotes/categories');
+        return $http.get('/quotes/categories');
     }
 
     const state = {
@@ -44,7 +44,7 @@ var ctrl = app.controller('QuotesApp.MainCtrl', function ($scope, $http) {
             if(!c)
                 return;
 
-            $http.get(`quotes/${c.acronym}`).then(function(result) {
+            $http.get(`/quotes/${c.acronym}`).then(function(result) {
                 state.quotes = result.data;
             }, function(err) {
                 console.error(err);
@@ -79,7 +79,7 @@ var ctrl = app.controller('QuotesApp.MainCtrl', function ($scope, $http) {
 
                 const payload = { category_id: categ.id, description: desc, author: author };
 
-                $http.post(`quotes/${categ.acronym}`, payload).then(function (result) {
+                $http.post(`/quotes/${categ.acronym}`, payload).then(function (result) {
 
                     form.id = 0;
                     form.description = '';
@@ -97,7 +97,7 @@ var ctrl = app.controller('QuotesApp.MainCtrl', function ($scope, $http) {
         },
 
         removeQuote(q) {
-            $http.delete(`quotes/${q.id}`).then(function (result) {
+            $http.delete(`/quotes/${q.id}`).then(function (result) {
                 state.quotes = state.quotes.filter(function(x){
                     return x.id != q.id
                 });
