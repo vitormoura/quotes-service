@@ -46,7 +46,7 @@ class QuotesResource(Resource):
             'category_id', type=int, help="quote category id", required=True)
 
     def get(self, categ_acc):
-        result = Quote.query.filter(Quote.category.has(acronym="miscellaneous")).all()
+        result = Quote.query.filter(Quote.category.has(acronym=categ_acc)).all()
         return jsonify(result)
 
     def post(self, categ_acc):
