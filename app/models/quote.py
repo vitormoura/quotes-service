@@ -19,6 +19,6 @@ class Quote(OutputMixin, db.Model):
     def __repr__(self):
         return '<Quote id={}, description={}, category_id={}, author={} >'.format(self.id, self.description, self.category_id, self.author)
 
-class QuoteSchema(ma.ModelSchema):
+class QuoteSchema(ma.Schema):
     class Meta:
         model = Quote

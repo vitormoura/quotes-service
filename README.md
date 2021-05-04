@@ -18,6 +18,9 @@ REST service to manage motivational or corporate quotes
 
 ### Testing
 
+Visit the site
+http://localhost:5000/index.html
+
 ```shell
 > pytest tests/
 ```

@@ -13,6 +13,6 @@ class QuoteCategory(OutputMixin, db.Model):
     def __repr__(self):
         return '<QuoteCategory id={}, description={}, acronym={} >'.format(self.id, self.description, self.acronym)
 
-class QuoteCategorySchema(ma.ModelSchema):
+class QuoteCategorySchema(ma.Schema):
     class Meta:
         model = QuoteCategory
